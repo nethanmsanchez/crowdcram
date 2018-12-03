@@ -39,8 +39,23 @@ div.reply_content {
 }
 
 .top_bar{
-  display: block;
   position: relative;
+  left: 180px;
+  font-size: 175%
+}
 
-  font-size: 100%;
+.profile_box{
+  display: block;
+  background-color: #fbff93;
+  height: 200px;
+  margin-right: 0px;
+  max-width: 500px;
+}
+
+.schedule_box{
+  display: block;
+  background-color: #559ad6;
+  height: 200px;
+  margin-left: 15px;
+  max-width: 500px;
 }

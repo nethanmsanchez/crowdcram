@@ -4,22 +4,39 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     //URL's
-    //var is_logged_in = {{='false' if auth.user is None else 'true'}};
-
+    var is_logged_in = {{='false' if auth.user is None else 'true'}};
+    var add_user_url = "{{=URL('api', 'add_user', user_signature=True)}}"
+    var get_user_url = "{{=URL('api', 'get_user', user_signature=True)}}"
+    var get_user_email_url = "{{=URL('api', 'get_user_email', user_signature=True)}}"
 
 </script>
 {{end}}
 
 
 
-
-<span class="container">
-    <div class="threequarters"></div>
-    <div class="top_bar quarter">
-        <h1>CrowdCram</h1>
-    </div>
-</span>
-
+<div id="vue-div">
+    <span v-if="is_logged_in">
+        <div class="container main_content">
+            <div class="half compressible"></div>
+            <div class="top_bar quarter compressible">CrowdCram</div>
+            <div class="quarter compressible"></div>
+            <div class="half compressible profile_box">
+                <div v-if="this.editing == false">
+                    <p class="current_user">name: ${current_user}</br>bio: ${current_bio}</br>classes: ${current_classes}</p>
+                    <i v-on:click="toggle_edit" class="fa fa-pencil-square-o"></i>
+                </div>
+            </div>
+            <span v-if="this.editing == true">
+                <textarea v-model="current_user"></textarea>
+                <textarea v-model="current_bio"></textarea>
+                <textarea v-model="current_classes"></textarea>
+                <button v-on:click="submit_edit">Done</button>
+            </span>
+            <div class="half compressible schedule_box">Schedule goes here</div>
+            <a class="btn navy">Create a Group</a>
+        </div>
+    </span>
+</div>
 
 
 
