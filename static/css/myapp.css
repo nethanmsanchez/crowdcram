@@ -47,7 +47,7 @@ div.reply_content {
 .profile_box{
   display: block;
   background-color: #fbff93;
-  height: 200px;
+  height: 300px;
   margin-right: 0px;
   max-width: 500px;
 }
@@ -55,7 +55,7 @@ div.reply_content {
 .schedule_box{
   display: block;
   background-color: #559ad6;
-  height: 200px;
+  height: 300px;
   margin-left: 15px;
   max-width: 500px;
 }

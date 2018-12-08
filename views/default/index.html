@@ -8,6 +8,7 @@
     var add_user_url = "{{=URL('api', 'add_user', user_signature=True)}}"
     var get_user_url = "{{=URL('api', 'get_user', user_signature=True)}}"
     var get_user_email_url = "{{=URL('api', 'get_user_email', user_signature=True)}}"
+    var search_users_url = "{{=URL('api', 'get_search_list', user_signature=True)}}"
 
 </script>
 {{end}}
@@ -16,25 +17,47 @@
 
 <div id="vue-div">
     <span v-if="is_logged_in">
-        <div class="container main_content">
-            <div class="half compressible"></div>
-            <div class="top_bar quarter compressible">CrowdCram</div>
-            <div class="quarter compressible"></div>
-            <div class="half compressible profile_box">
-                <div v-if="this.editing == false">
-                    <p class="current_user">name: ${current_user}</br>bio: ${current_bio}</br>classes: ${current_classes}</p>
-                    <i v-on:click="toggle_edit" class="fa fa-pencil-square-o"></i>
+        <span v-if="!create_group">
+            <div class="container main_content">
+                <div class="half compressible"></div>
+                <div class="top_bar quarter compressible">CrowdCram</div>
+                <div class="quarter compressible"></div>
+                <div class="half compressible profile_box">
+                    <template v-if="editing == false">
+                        <p class="current_user">name: ${current_user}</br>bio: ${current_bio}</br>class: ${current_class_1}</br>class: ${current_class_2}</br>class: ${current_class_3}</p>
+                        <i v-on:click="toggle_edit" class="fa fa-pencil-square-o"></i>
+                    </template>
+                    <template v-if="editing == true">
+                        <textarea v-model="current_user"></textarea>
+                        <textarea v-model="current_bio"></textarea>
+                        <textarea v-model="current_class_1"></textarea>
+                        <textarea v-model="current_class_2"></textarea>
+                        <textarea v-model="current_class_3"></textarea>
+                        <button v-on:click="submit_edit">Done</button>
+                    </template>
+                </div>
+                <div class="half compressible schedule_box">Schedule goes here</div>
+                <a v-on:click="toggle_page_1" class="btn navy">Create a Group</a>
+            </div>
+        </span>
+        <span v-if="create_group">
+            <div class="container main_content">
+                <div class="half compressible"></div>
+                <div class="top_bar quarter compressible">CrowdCram</div>
+                <div class="quarter compressible"></div>
+                <div class="half compressible profile_box">
+                    <p>Search:</p>
+                    <textarea v-model="search_query"></textarea>
+                    <button v-on:click="toggle_page_1">Search</button>
+                    <button v-on:click="toggle_home">Done</button>
+                    <span v-for="user in query_list">
+                        <p>name: ${user.profile_name}</p>
+                        <p>bio: ${user.profile_bio}</p>
+                        <button v-on:click="invite_user(user._idx)">invite</button>
+                    </span>
                 </div>
             </div>
-            <span v-if="this.editing == true">
-                <textarea v-model="current_user"></textarea>
-                <textarea v-model="current_bio"></textarea>
-                <textarea v-model="current_classes"></textarea>
-                <button v-on:click="submit_edit">Done</button>
-            </span>
-            <div class="half compressible schedule_box">Schedule goes here</div>
-            <a class="btn navy">Create a Group</a>
-        </div>
+        </span>
     </span>
 </div>
 

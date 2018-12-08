@@ -26,7 +26,9 @@ db.define_table('profile',
                 Field('profile_email', default=get_user_email()),
                 Field('profile_name', 'text'),
                 Field('profile_bio', 'text'),
-                Field('profile_classes', 'text'),
+                Field('profile_class_1', 'text'),
+                Field('profile_class_2', 'text'),
+                Field('profile_class_3', 'text'),
                 )
 
 
