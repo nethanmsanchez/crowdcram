@@ -31,4 +31,3 @@ db.define_table('profile',
                 Field('profile_class_3', 'text'),
                 )
 
-
