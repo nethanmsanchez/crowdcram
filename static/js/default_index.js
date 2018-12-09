@@ -6,17 +6,22 @@ var app = function() {
     Vue.config.silent = false; // show all warnings
 
 
-        // Extends an array
-    self.extend = function(a, b) {
+    // Extends an array
+    self.extend = function (a, b) {
         for (var i = 0; i < b.length; i++) {
             a.push(b[i]);
         }
     };
 
     // Enumerates an array.
-    var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;});};
+    var enumerate = function (v) {
+        var k = 0;
+        return v.map(function (e) {
+            e._idx = k++;
+        });
+    };
 
-    self.add_user = function() {
+    self.add_user = function () {
         $.post(add_user_url,
             {
                 profile_email: self.vue.logged_in_user_email,
@@ -29,12 +34,12 @@ var app = function() {
         );
     };
 
-    self.get_user = function() {
+    self.get_user = function () {
         $.getJSON(get_user_url,
             {
                 profile_email: self.vue.logged_in_user_email
             },
-            function(data) {
+            function (data) {
                 self.vue.current_user = data.profile_name;
                 self.vue.current_bio = data.profile_bio;
                 self.vue.current_class_1 = data.profile_class_1;
@@ -44,6 +49,27 @@ var app = function() {
         );
     };
 
+    self.get_crowd = function() {
+        $.getJSON(get_crowd_url,
+            {
+                invite_list: self.vue.invite_list
+            },
+            function(data) {
+                self.vue.crowd_list = data.crowd_list;
+            })
+    };
+
+    self.get_invites = function () {
+        $.getJSON(get_invites_url,
+            {
+                profile_email: self.vue.logged_in_user_email
+            },
+            function (data) {
+                self.vue.invite_list = data.invite_list;
+            }
+        );
+
+    };
 
 
 
@@ -80,7 +106,7 @@ var app = function() {
     self.search_users = function(){
         $.getJSON(search_users_url,
             {
-                search: self.vue.search_query
+                search: self.vue.crowd_class
             },
             function(data){
                 self.vue.query_list = data.search_list;
@@ -91,11 +117,35 @@ var app = function() {
 
     self.toggle_home = function(){
         self.vue.create_group = false;
+        self.vue.show_users = false;
     };
 
     self.invite_user = function(user_idx){
         var u = self.vue.query_list[user_idx];
-    }
+        $.post(invite_user_url,
+            {
+                profile_email: u.profile_email,
+                crowd_id: self.vue.crowd_id,
+            },
+        );
+    };
+
+    self.submit_group = function(){
+        $.post(add_group_url,
+            {
+                crowd_date: self.vue.crowd_date,
+                crowd_time: self.vue.crowd_time,
+                crowd_location: self.vue.crowd_location,
+                crowd_class: self.vue.crowd_class,
+            },
+            function(data){
+                self.vue.crowd_id = data.crowd_id;
+            }
+        );
+        //********************************************
+        self.search_users();//might need to move this ******************
+        self.vue.show_users = true;
+    };
 
     self.vue = new Vue({
         el: "#vue-div",
@@ -111,8 +161,16 @@ var app = function() {
             logged_in_user_email: [],
             editing: false,
             create_group: false,
+            show_users: false,
             search_query: "",
+            crowd_id: "",
             query_list: [],
+            invite_list: [],
+            crowd_list: [],
+            crowd_date: "Please enter a date for your study group",
+            crowd_time: "Please enter a time for your study group",
+            crowd_location: "Please enter a location for your study group",
+            crowd_class: "Please enter a class for your study group",
         },
         methods: {
             get_email: self.get_email,
@@ -123,6 +181,8 @@ var app = function() {
             toggle_page_1: self.toggle_page_1,
             toggle_home: self.toggle_home,
             invite_user: self.invite_user,
+            submit_group: self.submit_group,
+            get_crowd: self.get_crowd,
         }
 
     });

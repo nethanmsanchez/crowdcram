@@ -31,3 +31,25 @@ db.define_table('profile',
                 Field('profile_class_3', 'text'),
                 )
 
+db.define_table('crowd',
+                Field('crowd_date', 'text'),
+                Field('crowd_time', 'text'),
+                Field('crowd_location', 'text'),
+                Field('crowd_class', 'text'),
+                Field('crowd_member_1', 'text'),
+                Field('crowd_member_2', 'text'),
+                Field('crowd_member_3', 'text'),
+                Field('crowd_member_4', 'text'),
+                Field('crowd_member_5', 'text'),
+                Field('crowd_member_6', 'text'),
+                Field('crowd_member_7', 'text'),
+                Field('crowd_member_8', 'text'),
+                Field('crowd_member_9', 'text'),
+                Field('crowd_member_10', 'text'),
+                )
+
+db.define_table('invite',
+                Field('profile_email', 'text'),
+                Field('crowd_id', 'reference crowd'),
+                Field('answered', 'text'),
+                )

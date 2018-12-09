@@ -9,6 +9,10 @@
     var get_user_url = "{{=URL('api', 'get_user', user_signature=True)}}"
     var get_user_email_url = "{{=URL('api', 'get_user_email', user_signature=True)}}"
     var search_users_url = "{{=URL('api', 'get_search_list', user_signature=True)}}"
+    var add_group_url = "{{=URL('api', 'add_group', user_signature=True)}}"
+    var invite_user_url = "{{=URL('api', 'invite_user', user_signature=True)}}"
+    var get_invites_url = "{{=URL('api', 'get_invites', user_signature=True)}}"
+    var get_crowd_url = "{{=URL('api', 'get_invites', user_signature=True)}}"
 
 </script>
 {{end}}
@@ -36,7 +40,11 @@
                         <button v-on:click="submit_edit">Done</button>
                     </template>
                 </div>
-                <div class="half compressible schedule_box">Schedule goes here</div>
+                <div class="half compressible schedule_box">
+                    <span v-for="crowd in crowd_list">
+                        <p> date: ${crowd.crowd_date}</p>
+                    </span>
+                </div>
                 <a v-on:click="toggle_page_1" class="btn navy">Create a Group</a>
             </div>
         </span>
@@ -46,7 +54,22 @@
                 <div class="top_bar quarter compressible">CrowdCram</div>
                 <div class="quarter compressible"></div>
                 <div class="half compressible profile_box">
-                    <p>Search:</p>
+                    <span v-if="show_users == false">
+                        <textarea v-model="crowd_date"></textarea>
+                        <textarea v-model="crowd_time"></textarea>
+                        <textarea v-model="crowd_location"></textarea>
+                        <textarea v-model="crowd_class"></textarea>
+                        <button v-on:click="submit_group">done</button>
+                    </span>
+                    <span v-if="show_users == true">
+                        <span v-for="user in query_list">
+                            <p>name: ${user.profile_name}</p>
+                            <p>bio: ${user.profile_bio}</p>
+                            <button v-on:click="invite_user(user._idx)">invite</button>
+                        </span>
+                        <button v-on:click="toggle_home">done</button>
+                    </span>
+                    <!--<p>Search:</p>
                     <textarea v-model="search_query"></textarea>
                     <button v-on:click="toggle_page_1">Search</button>
                     <button v-on:click="toggle_home">Done</button>
@@ -54,7 +77,7 @@
                         <p>name: ${user.profile_name}</p>
                         <p>bio: ${user.profile_bio}</p>
                         <button v-on:click="invite_user(user._idx)">invite</button>
-                    </span>
+                    </span>-->
                 </div>
             </div>
         </span>
