@@ -87,6 +87,7 @@ var app = function() {
             }
         );
         self.vue.crowd_list2.splice(crowd_idx,1)
+        enumerate(self.vue.crowd_list2);
     };
 
     self.join_group = function(crowd_idx) {
@@ -103,7 +104,8 @@ var app = function() {
     self.delete_invite = function(crowd_idx){
         c = self.vue.crowd_list[crowd_idx];
         self.vue.crowd_list.splice(crowd_idx,1);
-        $.getJSON(delete_group_url,
+        enumerate(self.vue.crowd_list);
+        $.getJSON(delete_invite_url,
             {
                 crowd_id: c.crowd_id,
                 invite_id: c.invite_id,
@@ -111,6 +113,16 @@ var app = function() {
         )
     };
 
+    self.delete_group = function(crowd_idx){
+        c = self.vue.crowd_list2[crowd_idx];
+        self.vue.crowd_list2.splice(crowd_idx,1);
+        enumerate(self.vue.crowd_list2);
+        $.getJSON(delete_group_url,
+            {
+                crowd_id: c.crowd_id,
+            }
+        );
+    };
 
     // function that gets the email of the current user
     self.get_email = function(){

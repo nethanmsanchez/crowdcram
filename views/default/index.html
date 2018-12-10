@@ -14,8 +14,9 @@
     var get_invites_url = "{{=URL('api', 'get_invites', user_signature=True)}}"
     var get_crowd_url = "{{=URL('api', 'get_crowd', user_signature=True)}}"
     var join_groups_url = "{{=URL('api', 'join_groups', user_signature=True)}}"
-    var delete_group_url = "{{=URL('api', 'delete_invite', user_signature=True)}}"
+    var delete_invite_url = "{{=URL('api', 'delete_invite', user_signature=True)}}"
     var leave_group_url = "{{=URL('api', 'leave_group', user_signature=True)}}"
+    var delete_group_url = "{{=URL('api', 'delete_group', user_signature=True)}}"
 
 </script>
 {{end}}
@@ -44,14 +45,17 @@
                     </template>
                 </div>
                 <div class="half compressible schedule_box">
-                    <span v-for="crowd in crowd_list2">
+                    <span v-for="crowd in crowd_list">
                         <span v-if="crowd.profile_email==logged_in_user_email"></span>
                             <p>date: ${crowd.crowd_date}</p>
                             <p>time: ${crowd.crowd_time}</p>
                             <p>location: ${crowd.crowd_location}</p>
                             <p>class: ${crowd.crowd_class}</p>
-                            <button v-on:click="leave_group(crowd._idx)">leave</button>
-                            <!--<button v-on:click="delete_invite(crowd._idx)">decline</button>-->
+                            <p>id: ${crowd.crowd_id}</p>
+                            <p>crowd._idx: ${crowd._idx}</p>
+                            <!--<button v-on:click="leave_group(crowd._idx)">leave</button>-->
+                            <button v-on:click="delete_invite(crowd._idx)">decline</button>
+                            <button v-on:click="join_group(crowd._idx)">accept</button>
                         </span>
                     </span>
                 </div>
