@@ -20,11 +20,67 @@ def add_user():
     )
     return "ok"
 
+def join_groups():
+    crowd_id = request.vars.crowd_id
+    num_members = int(request.vars.num_members)
+    num_members = num_members + 1
+    if num_members == 2:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_2= auth.user.email,
+        )
+    elif num_members == 3:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_3= auth.user.email,
+        )
+    elif num_members == 4:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_4= auth.user.email,
+        )
+    elif num_members == 5:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_5= auth.user.email,
+        )
+    elif num_members == 6:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_6= auth.user.email,
+        )
+    elif num_members == 7:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_7= auth.user.email,
+        )
+    elif num_members == 8:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_8= auth.user.email,
+        )
+    elif num_members == 9:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_9= auth.user.email,
+        )
+    elif num_members == 10:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+                crowd_member_10= auth.user.email,
+        )
+    return "ok"
+
 def invite_user():
     db.invite.insert(
         profile_email=request.vars.profile_email,
         crowd_id=request.vars.crowd_id,
     )
+    return "ok"
+
+def delete_invite():
+    crowd_id = request.vars.crowd_id
+    db(db.invite.crowd_id == crowd_id & db.invite.profile_email ==auth.user.email).delete()
     return "ok"
 
 def add_group():
@@ -33,7 +89,7 @@ def add_group():
         crowd_time=request.vars.crowd_time,
         crowd_location=request.vars.crowd_location,
         crowd_class=request.vars.crowd_class,
-        crowd_member=auth.user.email,
+        crowd_member_1=auth.user.email,
     )
     return response.json(dict(crowd_id=crowd_id))
 
@@ -41,21 +97,32 @@ def get_invites():
     results = []
     invites = db(db.invite.profile_email == auth.user.email).select()
     count = 0
+    results2 = []
     for x in invites:
         results.append(dict(
             crowd_id=x.crowd_id,
+            invite_id=x.id,
         ))
-    return response.json(dict(invite_list=results))
+        crowd = db(db.crowd.id == x.crowd_id).select()
+        for c in crowd:
+            results2.append(dict(
+                crowd_date=c.crowd_date,
+                crowd_time=c.crowd_time,
+                crowd_location=c.crowd_location,
+                crowd_class=c.crowd_class,
+                num_members=c.num_members,
+                crowd_id=c.id,
+            ))
+    return response.json(dict(invite_list=results, crowd_list=results2))
 
 def get_crowd():
     results = []
-    for x in request.vars.invite_list:
-        crowd = db(db.crowd.crowd_id == x.crowd_id).select()
-        results.append(dict(
-            crowd_date=crowd.crowd_date,
-            crowd_time=crowd.crowd_time,
-            crowd_location=crowd.crowd_location,
-            crowd_class=crowd.crowd_class,
+    crowd = db(db.crowd.id == request.vars.crowd_id).select()
+    results.append(dict(
+        crowd_date=crowd.crowd_date,
+        crowd_time=crowd.crowd_time,
+        crowd_location=crowd.crowd_location,
+        crowd_class=crowd.crowd_class,
         ))
     return response.json(dict(crowd_list=results))
 

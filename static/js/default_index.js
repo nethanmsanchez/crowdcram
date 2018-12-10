@@ -49,15 +49,6 @@ var app = function() {
         );
     };
 
-    self.get_crowd = function() {
-        $.getJSON(get_crowd_url,
-            {
-                invite_list: self.vue.invite_list
-            },
-            function(data) {
-                self.vue.crowd_list = data.crowd_list;
-            })
-    };
 
     self.get_invites = function () {
         $.getJSON(get_invites_url,
@@ -66,15 +57,32 @@ var app = function() {
             },
             function (data) {
                 self.vue.invite_list = data.invite_list;
+                self.vue.crowd_list = data.crowd_list;
+                enumerate(self.vue.crowd_list);
             }
         );
-
     };
 
 
+    self.join_group = function(crowd_idx) {
+        var c = self.vue.crowd_list[crowd_idx];
+        $.getJSON(join_groups_url,
+            {
+                crowd_id: c.crowd_id,
+                num_members: c.num_members,
+            }
+        )
+        self.delete_invite(crowd_idx);
+    };
 
-
-
+    self.delete_invite = function(crowd_idx){
+        var c = self.vue.crowd_list[crowd_idx];
+        $.getJSON(delete_group_url,
+            {
+                crowd_id: c.crowd_id,
+            }
+        )
+    };
 
 
     // function that gets the email of the current user
@@ -97,7 +105,7 @@ var app = function() {
 
     self.toggle_page_1 = function(){
         if(self.vue.create_group){
-            self.search_users();
+            self.search_users();// maybe take out
         } else {
             self.vue.create_group = !self.vue.create_group;
         }
@@ -182,13 +190,18 @@ var app = function() {
             toggle_home: self.toggle_home,
             invite_user: self.invite_user,
             submit_group: self.submit_group,
-            get_crowd: self.get_crowd,
+            join_group: self.join_group,
+            delete_invite: self.delete_invite,
         }
 
     });
 
     self.get_email();
     self.get_user();
+    self.get_invites();
+    //console.log(self.vue.invite_list[0]);
+    //console.log(self.vue.invite_list[1].crowd_id);
+    //self.get_crowd(self.vue.invite_list[0].crowd_id);
 
     return self;
 };

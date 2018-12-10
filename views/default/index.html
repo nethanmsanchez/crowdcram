@@ -12,7 +12,9 @@
     var add_group_url = "{{=URL('api', 'add_group', user_signature=True)}}"
     var invite_user_url = "{{=URL('api', 'invite_user', user_signature=True)}}"
     var get_invites_url = "{{=URL('api', 'get_invites', user_signature=True)}}"
-    var get_crowd_url = "{{=URL('api', 'get_invites', user_signature=True)}}"
+    var get_crowd_url = "{{=URL('api', 'get_crowd', user_signature=True)}}"
+    var join_groups_url = "{{=URL('api', 'join_groups', user_signature=True)}}"
+    var delete_group_url = "{{=URL('api', 'delete_invite', user_signature=True)}}"
 
 </script>
 {{end}}
@@ -42,7 +44,13 @@
                 </div>
                 <div class="half compressible schedule_box">
                     <span v-for="crowd in crowd_list">
-                        <p> date: ${crowd.crowd_date}</p>
+                        <p>date: ${crowd.crowd_date}</p>
+                        <p>time: ${crowd.crowd_time}</p>
+                        <p>location: ${crowd.crowd_location}</p>
+                        <p>class: ${crowd.crowd_class}</p>
+                        <p>num_members: ${crowd.num_members}</p>
+                        <button v-on:click="join_group(crowd._idx)">accept</button>
+                        <button v-on:click="delete_invite(crowd._idx)">decline</button>
                     </span>
                 </div>
                 <a v-on:click="toggle_page_1" class="btn navy">Create a Group</a>

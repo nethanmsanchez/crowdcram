@@ -46,6 +46,7 @@ db.define_table('crowd',
                 Field('crowd_member_8', 'text'),
                 Field('crowd_member_9', 'text'),
                 Field('crowd_member_10', 'text'),
+                Field('num_members', 'integer', default=1),
                 )
 
 db.define_table('invite',
