@@ -63,6 +63,16 @@ var app = function() {
         );
     };
 
+    self.leave_group = function(crowd_idx){
+        var c = self.vue.crowd_list[crowd_idx];
+        $.getJSON(leave_group_url,
+            {
+                crowd_id: c.crowd_id,
+                num_members: c.num_members,
+                profile_email: c.profile_email
+            }
+        );
+    };
 
     self.join_group = function(crowd_idx) {
         var c = self.vue.crowd_list[crowd_idx];
@@ -71,15 +81,17 @@ var app = function() {
                 crowd_id: c.crowd_id,
                 num_members: c.num_members,
             }
-        )
+        );
         self.delete_invite(crowd_idx);
     };
 
     self.delete_invite = function(crowd_idx){
-        var c = self.vue.crowd_list[crowd_idx];
+        c = self.vue.crowd_list[crowd_idx];
+        self.vue.crowd_list.splice(crowd_idx,1);
         $.getJSON(delete_group_url,
             {
                 crowd_id: c.crowd_id,
+                invite_id: c.invite_id,
             }
         )
     };

@@ -79,9 +79,18 @@ def invite_user():
     return "ok"
 
 def delete_invite():
-    crowd_id = request.vars.crowd_id
-    db(db.invite.crowd_id == crowd_id & db.invite.profile_email ==auth.user.email).delete()
+    invite_id = request.vars.invite_id
+    db(db.invite.id == invite_id).delete()
     return "ok"
+
+def leave_group():
+    crowd_id = request.vars.crowd_id
+    num_members = request.vars.num_members
+    profile_email = request.vars.profile_email
+    crowd = db(db.crowd.id == crowd_id)
+    for x in range(1,11):
+
+     return "ok"
 
 def add_group():
     crowd_id = db.crowd.insert(
@@ -112,6 +121,8 @@ def get_invites():
                 crowd_class=c.crowd_class,
                 num_members=c.num_members,
                 crowd_id=c.id,
+                invite_id=x.id,
+                profile_email=x.profile_email,
             ))
     return response.json(dict(invite_list=results, crowd_list=results2))
 
