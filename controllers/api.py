@@ -87,10 +87,58 @@ def leave_group():
     crowd_id = request.vars.crowd_id
     num_members = request.vars.num_members
     profile_email = request.vars.profile_email
-    crowd = db(db.crowd.id == crowd_id)
-    for x in range(1,11):
-
-     return "ok"
+    crowd_mem_num = request.vars.crowd_mem_num
+    if crowd_mem_num == 1:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_1 = ""
+        )
+    if crowd_mem_num == 2:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_2 = ""
+        )
+    if crowd_mem_num == 3:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_3 = ""
+        )
+    if crowd_mem_num == 4:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_4 = ""
+        )
+    if crowd_mem_num == 5:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_5 = ""
+        )
+    if crowd_mem_num == 6:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_6 = ""
+        )
+    if crowd_mem_num == 7:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_7 = ""
+        )
+    if crowd_mem_num == 8:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_8 = ""
+        )
+    if crowd_mem_num == 9:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_9 = ""
+        )
+    if crowd_mem_num == 10:
+        db.crowd.update_or_insert(
+            (db.crowd.id == crowd_id),
+            crowd_member_10 = ""
+        )
+    return "ok"
 
 def add_group():
     crowd_id = db.crowd.insert(
@@ -128,14 +176,98 @@ def get_invites():
 
 def get_crowd():
     results = []
-    crowd = db(db.crowd.id == request.vars.crowd_id).select()
-    results.append(dict(
-        crowd_date=crowd.crowd_date,
-        crowd_time=crowd.crowd_time,
-        crowd_location=crowd.crowd_location,
-        crowd_class=crowd.crowd_class,
+    crowds = db(db.crowd.crowd_member_1 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 1,
         ))
-    return response.json(dict(crowd_list=results))
+    crowds = db(db.crowd.crowd_member_2 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 2,
+        ))
+    crowds = db(db.crowd.crowd_member_3 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 3,
+        ))
+    crowds = db(db.crowd.crowd_member_4 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 4,
+        ))
+    crowds = db(db.crowd.crowd_member_5 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 5,
+        ))
+
+    crowds = db(db.crowd.crowd_member_6 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 6,
+        ))
+    crowds = db(db.crowd.crowd_member_7 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 7,
+        ))
+    crowds = db(db.crowd.crowd_member_8 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 8,
+        ))
+    crowds = db(db.crowd.crowd_member_9 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 9,
+        ))
+    crowds = db(db.crowd.crowd_member_10 == auth.user.email).select()
+    for crowd in crowds:
+        results.append(dict(
+            crowd_date=crowd.crowd_date,
+            crowd_time=crowd.crowd_time,
+            crowd_location=crowd.crowd_location,
+            crowd_class=crowd.crowd_class,
+            crowd_mem_num= 10,
+        ))
+    return response.json(dict(crowd_list2=results))
 
 def get_user():
     profile_email = request.vars.profile_email

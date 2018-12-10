@@ -63,15 +63,30 @@ var app = function() {
         );
     };
 
+    self.get_crowd = function() {
+        $.getJSON(get_crowd_url,
+            {
+
+            },
+            function(data) {
+            self.vue.crowd_list2 = data.crowd_list2;
+            enumerate(self.vue.crowd_list2);
+            //self.vue.crowd_list2.splice(crowd_idx,1)
+            }
+        )
+    };
+
     self.leave_group = function(crowd_idx){
-        var c = self.vue.crowd_list[crowd_idx];
+        var c = self.vue.crowd_list2[crowd_idx];
         $.getJSON(leave_group_url,
             {
                 crowd_id: c.crowd_id,
                 num_members: c.num_members,
-                profile_email: c.profile_email
+                profile_email: c.profile_email,
+                crowd_mem_num: c.crowd_mem_num,
             }
         );
+        self.vue.crowd_list2.splice(crowd_idx,1)
     };
 
     self.join_group = function(crowd_idx) {
@@ -187,6 +202,7 @@ var app = function() {
             query_list: [],
             invite_list: [],
             crowd_list: [],
+            crowd_list2: [],
             crowd_date: "Please enter a date for your study group",
             crowd_time: "Please enter a time for your study group",
             crowd_location: "Please enter a location for your study group",
@@ -204,6 +220,7 @@ var app = function() {
             submit_group: self.submit_group,
             join_group: self.join_group,
             delete_invite: self.delete_invite,
+            leave_group: self.leave_group,
         }
 
     });
@@ -211,6 +228,7 @@ var app = function() {
     self.get_email();
     self.get_user();
     self.get_invites();
+    self.get_crowd();
     //console.log(self.vue.invite_list[0]);
     //console.log(self.vue.invite_list[1].crowd_id);
     //self.get_crowd(self.vue.invite_list[0].crowd_id);
