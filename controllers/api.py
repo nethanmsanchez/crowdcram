@@ -86,6 +86,7 @@ def delete_invite():
 def delete_group():
     crowd_id = request.vars.crowd_id
     db(db.crowd.id == crowd_id).delete()
+    db(db.invite.crowd_id == crowd_id).delete()
     return "ok"
 
 def leave_group():
@@ -190,6 +191,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 1,
             crowd_id=crowd.id,
+            crowd_creater=True,
         ))
     crowds = db(db.crowd.crowd_member_2 == auth.user.email).select()
     for crowd in crowds:
@@ -200,6 +202,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 2,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_3 == auth.user.email).select()
     for crowd in crowds:
@@ -210,6 +213,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 3,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_4 == auth.user.email).select()
     for crowd in crowds:
@@ -220,6 +224,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 4,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_5 == auth.user.email).select()
     for crowd in crowds:
@@ -230,6 +235,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 5,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
 
     crowds = db(db.crowd.crowd_member_6 == auth.user.email).select()
@@ -241,6 +247,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 6,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_7 == auth.user.email).select()
     for crowd in crowds:
@@ -251,6 +258,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 7,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_8 == auth.user.email).select()
     for crowd in crowds:
@@ -261,6 +269,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 8,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_9 == auth.user.email).select()
     for crowd in crowds:
@@ -271,6 +280,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 9,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     crowds = db(db.crowd.crowd_member_10 == auth.user.email).select()
     for crowd in crowds:
@@ -281,6 +291,7 @@ def get_crowd():
             crowd_class=crowd.crowd_class,
             crowd_mem_num= 10,
             crowd_id=crowd.id,
+            crowd_creater=False,
         ))
     return response.json(dict(crowd_list2=results))
 

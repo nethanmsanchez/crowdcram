@@ -233,8 +233,8 @@ var app = function() {
             join_group: self.join_group,
             delete_invite: self.delete_invite,
             leave_group: self.leave_group,
+            delete_group: self.delete_group,
         }
-
     });
 
     self.get_email();

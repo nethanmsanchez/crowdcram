@@ -45,18 +45,17 @@
                     </template>
                 </div>
                 <div class="half compressible schedule_box">
-                    <span v-for="crowd in crowd_list">
-                        <span v-if="crowd.profile_email==logged_in_user_email"></span>
+                    <span v-for="crowd in crowd_list2">
+                        <!--<span v-if="crowd.crowd_creater">-->
                             <p>date: ${crowd.crowd_date}</p>
                             <p>time: ${crowd.crowd_time}</p>
                             <p>location: ${crowd.crowd_location}</p>
                             <p>class: ${crowd.crowd_class}</p>
-                            <p>id: ${crowd.crowd_id}</p>
-                            <p>crowd._idx: ${crowd._idx}</p>
-                            <!--<button v-on:click="leave_group(crowd._idx)">leave</button>-->
-                            <button v-on:click="delete_invite(crowd._idx)">decline</button>
-                            <button v-on:click="join_group(crowd._idx)">accept</button>
-                        </span>
+                            <button v-on:click="leave_group(crowd._idx)">leave</button>
+                            <button v-if="crowd.crowd_creater" v-on:click="delete_group(crowd._idx)">end group</button>
+                            <!--<button v-on:click="delete_invite(crowd._idx)">decline</button>
+                            <button v-on:click="join_group(crowd._idx)">accept</button>-->
+                        <!--</span>-->
                     </span>
                 </div>
                 <a v-on:click="toggle_page_1" class="btn navy">Create a Group</a>
