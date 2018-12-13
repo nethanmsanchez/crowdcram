@@ -54,3 +54,4 @@ db.define_table('invite',
                 Field('crowd_id', 'reference crowd'),
                 Field('answered', 'text'),
                 )
+

@@ -63,7 +63,7 @@ var app = function() {
         );
     };
 
-    self.get_crowd = function() {
+    self.get_crowd = function () {
         $.getJSON(get_crowd_url,
             {
 
@@ -87,8 +87,8 @@ var app = function() {
             }
         );
         self.vue.crowd_list2.splice(crowd_idx,1)
-        enumerate(self.vue.crowd_list2);
     };
+
 
     self.join_group = function(crowd_idx) {
         var c = self.vue.crowd_list[crowd_idx];
@@ -97,7 +97,7 @@ var app = function() {
                 crowd_id: c.crowd_id,
                 num_members: c.num_members,
             }
-        );
+        )
         self.delete_invite(crowd_idx);
     };
 
@@ -113,16 +113,6 @@ var app = function() {
         )
     };
 
-    self.delete_group = function(crowd_idx){
-        c = self.vue.crowd_list2[crowd_idx];
-        self.vue.crowd_list2.splice(crowd_idx,1);
-        enumerate(self.vue.crowd_list2);
-        $.getJSON(delete_group_url,
-            {
-                crowd_id: c.crowd_id,
-            }
-        );
-    };
 
     // function that gets the email of the current user
     self.get_email = function(){
@@ -143,11 +133,16 @@ var app = function() {
     };
 
     self.toggle_page_1 = function(){
+        self.vue.accept_invitations = false;
         if(self.vue.create_group){
             self.search_users();// maybe take out
         } else {
             self.vue.create_group = !self.vue.create_group;
         }
+    };
+
+    self.toggle_page_2 = function(){
+            self.vue.accept_invitations = !self.vue.accept_invitations;
     };
 
     self.search_users = function(){
@@ -209,6 +204,7 @@ var app = function() {
             editing: false,
             create_group: false,
             show_users: false,
+            accept_invitations: false,
             search_query: "",
             crowd_id: "",
             query_list: [],
@@ -227,14 +223,16 @@ var app = function() {
             toggle_edit: self.toggle_edit,
             submit_edit: self.submit_edit,
             toggle_page_1: self.toggle_page_1,
+            toggle_page_2: self.toggle_page_2,
             toggle_home: self.toggle_home,
             invite_user: self.invite_user,
             submit_group: self.submit_group,
             join_group: self.join_group,
             delete_invite: self.delete_invite,
             leave_group: self.leave_group,
-            delete_group: self.delete_group,
+            get_crowd: self.get_crowd,
         }
+
     });
 
     self.get_email();
